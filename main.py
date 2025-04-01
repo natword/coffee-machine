@@ -45,15 +45,12 @@ def report(resources):
 
 def check_ressource(drink, resources, menu):
     enough = True
-    if menu[drink]["ingredients"]["water"] > resources["water"]:
-        print("Sorry there is not enough water ")
-        enough = False
-    if drink != "espresso"and menu[drink]["ingredients"]["milk"] > resources["milk"]:
-        print("Sorry there is not enough milk ")
-        enough = False
-    if menu[drink]["ingredients"]["coffee"] > resources["coffee"]:
-        print("Sorry there is not enough coffee ")
-        enough = False
+
+    for ingredient in menu[drink]["ingredients"]:
+        if menu[drink]["ingredients"][ingredient] > resources[ingredient]:
+            print(f"Sorry there is not enough {ingredient}")
+            enough = False
+
     return enough
 
 def insert_coin():
@@ -78,10 +75,9 @@ def transaction(drink, menu, ressource, money_insert):
 
 
 def make_coffee(drink, menu, ressource):
-    ressource["water"] -= menu[drink]["ingredients"]["water"]
-    if drink != "espresso":
-        ressource["milk"] -= menu[drink]["ingredients"]["milk"]
-    ressource["coffee"] -= menu[drink]["ingredients"]["coffee"]
+
+    for ingredient in menu[drink]["ingredients"]:
+        ressource[ingredient] -= menu[drink]["ingredients"][ingredient]
     print("Here your coffee! enjoy ")
 
 
